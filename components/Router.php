@@ -29,10 +29,15 @@ class Router
 
             if(preg_match("~$uriPattern~", $uri)){
 
+                //Получаем внутренний путь из внешнего согласно правилу
+                $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
+
                 //Если есть совпадение, определить какой контроллер и action обрабатывают запрос
-                $segments = explode('/', $path);
+                $segments = explode('/', $internalRoute);
                 $controllerName = ucfirst(array_shift($segments).'Controller');
                 $actionName = 'action'.ucfirst(array_shift($segments));
+
+                $params = $segments;
 
                 //Подключить файл класса контроллера
                 $controllerFile = ROOT.'/controllers/'.$controllerName.'.php';
@@ -43,7 +48,10 @@ class Router
 
                 //Создать объект, вызвать метод(action)
                 $controllerObject = new $controllerName;
-                $result = $controllerObject->$actionName();
+
+                //$result = $controllerObject->$actionName($params);
+                $result = call_user_func_array(array($controllerObject, $actionName), $params);
+
                 if($result != null){
                     break;
                 }
