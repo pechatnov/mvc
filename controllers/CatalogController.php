@@ -1,8 +1,5 @@
 <?
 
-include_once(ROOT.'/models/Category.php');
-include_once(ROOT.'/models/Products.php');
-
 class CatalogController
 {
     public function actionIndex()
@@ -11,20 +8,23 @@ class CatalogController
         $sections = Category::getCategoriesList();
 
         $latestProducts = array();
-        $latestProducts = Products::getLatesProducts(7);
+        $latestProducts = Products::getLatesProducts();
 
         require_once(ROOT.'/views/catalog/index.php');
 
         return true;
     }
 
-    public function actionCategory($sectionId)
+    public function actionCategory($sectionId, $page = 1)
     {
         $sections = array();
         $sections = Category::getCategoriesList();
 
         $sectionsProducts = array();
-        $sectionsProducts = Products::getProductsListBySection($sectionId);
+        $sectionsProducts = Products::getProductsListBySection($sectionId, $page);
+
+        $total = Products::getTotalProductsInSection($sectionId);
+        $pagination = new Pagination($total, $page, Products::SHOW_BY_DEFAULT, 'page-');
 
         require_once(ROOT.'/views/catalog/section.php');
 

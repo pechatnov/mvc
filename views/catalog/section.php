@@ -38,7 +38,7 @@
                                     <div class="productinfo text-center">
                                         <img src="/template/images/home/product1.jpg" alt="" />
                                         <h2><?=$item['price']?>$</h2>
-                                        <p><a style="color: #696763;" href="/products/<?=$item['id']?>"><?=$item['name']?></a></p>
+                                        <p><a style="color: #696763;" href="/products/<?=$item['id']?>">ID:<?=$item['id']?><?=$item['name']?></a></p>
                                         <a href="#" class="btn btn-default add-to-cart">
                                             <i class="fa fa-shopping-cart"></i>В корзину
                                         </a>
@@ -49,6 +49,8 @@
                         </div>
                     <?}?>
                 </div><!--features_items-->
+
+                <?=$pagination->get();?>
 
                 <div class="recommended_items"><!--recommended_items-->
                     <h2 class="title text-center">Рекомендуемые товары</h2>

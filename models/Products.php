@@ -2,7 +2,7 @@
 
 class Products
 {
-    const SHOW_BY_DEFAULT = 10;
+    const SHOW_BY_DEFAULT = 2;
 
     public static function getLatesProducts($count = self::SHOW_BY_DEFAULT)
     {
@@ -32,9 +32,12 @@ class Products
         return $productsList;
     }
 
-    public static function getProductsListBySection($sectionId = false)
+    public static function getProductsListBySection($sectionId = false, $page = 1)
     {
         if($sectionId){
+            $page = intval($page);
+            $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
+
             $db = Db::getConnection();
 
             $products = array();
@@ -43,7 +46,8 @@ class Products
                 'SELECT id, name, price, is_new FROM product '.
                 'WHERE status = "1" AND category_id = '.$sectionId.
                 ' ORDER BY id DESC '.
-                'LIMIT '.self::SHOW_BY_DEFAULT
+                'LIMIT '.self::SHOW_BY_DEFAULT.
+                ' OFFSET '.$offset
             );
 
             $i = 0;
@@ -72,5 +76,19 @@ class Products
 
             return $result->fetch();
         }
+    }
+
+    public static function getTotalProductsInSection($sectionId)
+    {
+        $db = Db::getConnection();
+
+        $result = $db->query(
+            'SELECT count(id) AS count FROM product '.
+            'WHERE status="1" AND category_id="'.$sectionId.'"'
+        );
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+
+        return $row['count'];
     }
 }
