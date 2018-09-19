@@ -19,7 +19,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a class="<?if($sectionId == $item['id']) echo 'active';?>" href="/category/<?=$item['id']?>"><?=$item['name']?></a>
+                                        <a class="<?if($sectionId == $item['id']){echo 'active';$sectionName = $item['name'];}?>" href="/category/<?=$item['id']?>"><?=$item['name']?></a>
                                     </h4>
                                 </div>
                             </div>
@@ -30,7 +30,7 @@
 
             <div class="col-sm-9 padding-right">
                 <div class="features_items"><!--features_items-->
-                    <h2 class="title text-center">Последние товары</h2>
+                    <h2 class="title text-center"><?=$sectionName?></h2>
                     <?foreach($sectionsProducts as $item){?>
                         <div class="col-sm-4">
                             <div class="product-image-wrapper">

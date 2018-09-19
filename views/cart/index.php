@@ -35,6 +35,7 @@
                                         <th>Название</th>
                                         <th>Стоимость</th>
                                         <th>Количество</th>
+                                        <th>Удалить</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -46,14 +47,16 @@
                                                 </td>
                                                 <td><?=$item['price']?></td>
                                                 <td><?=$productsInCart[$item['id']]?></td>
+                                                <td><a data-id="<?=$item['id']?>" class="del-to-cart" href="/cart/del/<?=$item['id']?>" style="cursor: pointer;">x</a></td>
                                             </tr>
                                         <?}?>
                                         <tr>
                                             <td colspan="3">Общая стоимость:</td>
-                                            <td><?=$totalPrice?></td>
+                                            <td id="totalPrice"><?=$totalPrice?></td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <p><a href="/cart/checkout/">Оформить заказ</a></p>
                             </div>
                         <?}?>
                     </div><!--features_items-->
